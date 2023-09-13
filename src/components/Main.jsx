@@ -1,13 +1,83 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Task from './Task/Task';
 import {VscFilterFilled} from 'react-icons/vsc';
 import AddButton from './Task/AddButton';
 import AddTask from './Task/AddTask';
+import { TaskContext } from '../context/TasksContext';
+import { AuthContext } from '../context/UserContext';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Main = () => {
-const tasks=[
-  {id:"1",title:"TaskExample",category:"Home",}
-]
+
+const { currentUser } = useContext(AuthContext);
+const {categories, setTasks, tasks } = useContext(TaskContext);
+const [newTasks,setNewTasks]=useState([])
+const [forceRender,setForceRender]=useState(0)
+const getTasks = async () => {
+  console.log("categories",categories)
+  try{
+    const taskRef = collection(db, 'task');
+  const querySnapshot = await getDocs(taskRef);
+  const taskData = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    let cate= categories.find(c=>c.catId===data.cateId)
+    let newdata={
+      cateId: data.cateId,
+      taskId: data.taskId,
+      title: data.title,
+      uId: data.uId,
+      cateTitle: cate?.title,
+      cateColor: cate?.color,
+    }
+    taskData.push(newdata)
+  });
+  
+  return taskData
+} catch (error) {
+  console.error('Error fetching task data:', error);
+  throw error; // Handle the error in your component}
+}}
+
+  const setCompleteTasksData=()=>{
+    // setNewTasks(tasks)
+    // setTasks([])
+  tasks.map(task=>{
+    
+    let cate=categories.find(c=>c.catId===task.cateId)
+    let newtask={
+      cateId: task.cateId,
+      taskId: task.taskId,
+      title: task.title,
+      uId: task.uId,
+      cateTitle: cate.title,
+      cateColor: cate.color,
+    }
+   setNewTasks((old)=>{return [...old,newtask]})
+    
+  })
+  setTasks(()=>{return newTasks})
+  console.log("newTask:===========:",newTasks)
+}
+
+  useEffect(() => {
+   
+  const data= getTasks(currentUser.uid)
+  .then((taskData) => {
+    setTasks(()=>{return taskData})
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  })
+
+ setTimeout(() => {
+  setCompleteTasksData()
+}, "100");
+   }, []);
+
+
+ 
 
     return (
       <>
@@ -22,7 +92,7 @@ const tasks=[
             </div>
           </div>
             <Task tasks={tasks}/>
-            <AddTask/>        
+            <AddTask setForceRender={setForceRender} />        
         </div>
       </>
     );

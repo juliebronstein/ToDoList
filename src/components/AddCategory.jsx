@@ -61,7 +61,7 @@ const validationSchema = Yup.object({
   color: Yup.string().required("Please fill this box"),
 });
 
-const AddCategory = () => {
+const AddCategory = ({className}) => {
   const { currentUser } = useContext(AuthContext);
   const {setCatergories}=useContext(TaskContext)
   const [show, setShow] = useState(false);
@@ -72,7 +72,7 @@ const AddCategory = () => {
       <AddButton
         onClick={() => setShow(true)}
         title="Add new"
-        className="col-10 text-center mt-2 pointer add-cate add"
+        className={`pointer add-cate  ${className}`}
       />
       <ModalCenter title="Add Category" show={show} setShow={setShow}>
         <Formik

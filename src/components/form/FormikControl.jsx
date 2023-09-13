@@ -1,19 +1,8 @@
 import React from "react";
 import Input from "./Input";
 import Checkbox from "./CheckBox";
-// import Date from "./Date";
-// import File from "./File";
+import Select from "./Select";
 
-// import Select from "./Select";
-// import Switch from "./Switch";
-// import Ckeditor from "./Ckeditor";
-// import Textarea from "./Textarea";
-// import InputEnter from "./InputEnter";
-// import MultiSelect from "./MultiSelect";
-// import SearchableSelect from "./SearchableSelect";
-// import FilterSelect from "./FilterSelect";
-
-// import Radio from "./Radio";
 
 const FormikControl = (props) => {
   switch (props.control) {
@@ -25,8 +14,8 @@ const FormikControl = (props) => {
       return <Input {...props} />;
     // case "radio":
     //   return <Radio {...props} />;
-    // case "select":
-    //   return <Select {...props} />;
+    case "select":
+      return <Select {...props} />;
     // case "switch":
     //   return <Switch {...props} />;
     case "checkbox":

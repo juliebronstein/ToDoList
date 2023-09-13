@@ -7,6 +7,7 @@ export const ConvertColor = ({item,className}) => {
 //   };
 // style={mystyle}
 
+
   return (
     
     <div className={className} style={{background:`${item?item:"null"}` ,color:`${item?item:"null"}`}}></div>

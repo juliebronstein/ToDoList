@@ -16,12 +16,6 @@ import { date } from "yup";
 const SideBar = () => {
   const { currentUser } = useContext(AuthContext);
   const { setCatergories, categories } = useContext(TaskContext);
-   const category = [
-    { id: 1, title: "hame", color: "#ff0000" },
-    { id: 2, title: "work", color: "#ff0000" },
-    { id: 3, title: "scol", color: "#ff0000" },
-    { id: 4, title: "shopping", color: "#ff0000" },
-  ];
   const getCategoris = async () => {
     try{
       const categoryRef = collection(db, 'category');
@@ -39,7 +33,6 @@ const SideBar = () => {
   }}
  
     useEffect(() => {
-      try{}catch(err){}
     const data= getCategoris(currentUser.uid)
     .then((categoryData) => {
       setCatergories(()=>{return categoryData})
@@ -63,7 +56,7 @@ const SideBar = () => {
           Task
         </div>
         <Collaps title="Categories" options={categories}>
-          <AddCategory />
+          <AddCategory className="col-10 text-center mt-2 add" />
         </Collaps>
         <div className="cursor-pointer mt-1 ps-3 f-sidebare">
           <IoSettingsOutline className="icon" />

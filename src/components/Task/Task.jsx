@@ -4,15 +4,17 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TaskCart from "../TaskCart";
 
-
-
-const Task = ({tasks}) => {
   const initialValues = {
     email: "",
   };
   const onSubmit = async (values, actions) => {
     
   };
+
+const Task = ({tasks}) => {
+
+  // const {categories,setTasks}=useContext(TaskContext)
+
 
   const validationSchema = Yup.object({
     // email: Yup.string()
@@ -28,10 +30,13 @@ const Task = ({tasks}) => {
       >
         {(formik) => {
           return (
-            <Form className="col-12 d-flex">
-              <FormikControl className="" control="checkbox" name="email" formik={formik} value={true} />
+            <Form className="col-12 d-flex flex-column">
+              
               {tasks.map((task)=>(
-                <TaskCart key={"index_"+task.id} task={task}/>
+             <div key={task.taskId+"=="} className="d-flex flex-row mb-2">
+              <FormikControl className="col-2" control="checkbox" name="email" formik={formik} value={true} />
+                <TaskCart className="col-10" key={"index_"+task.taskId+"id"} task={task}/>
+             </div>
               )) }
             </Form>
           );

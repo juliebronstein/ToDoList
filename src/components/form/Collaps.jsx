@@ -30,7 +30,7 @@ const Collaps = ({ title, options, children }) => {
       <Collapse in={open} className="bg-darker border-radius-d ps-4 ">
         <div id="collapse ">
           {options && options?.map((option) => (
-            <div key={option.id+"_"} className="d-flex flex-row">
+            <div key={option.catId+"_"} className="d-flex flex-row">
               <ConvertColor item={option.color} className="d-flex color-box" />
               <div
                 className="d-flex pointer f-sidebare"
