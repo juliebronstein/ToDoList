@@ -28,23 +28,27 @@ import AddButton from "./AddButton";
 import ModalCenter from "../Modal";
 import FormikControl from "../form/FormikControl";
 import { TaskContext } from "../../context/TasksContext";
+import { Spinner } from "react-bootstrap";
 
 const initialValues = {
   title: "",
-  color: "",
+  cateId: "",
 };
 const onSubmit = async (values, actions, setErr, setLoading,setShow) => {
+    setLoading(true)
     try{
-
        
-    }catch(err){setErr(true)}
+    }catch(err){
+        setErr(true)}
+    setLoading(false)
+    actions.resetForm()
   setShow(false)
 };
 
 const validationSchema = Yup.object({
   title: Yup.string()
     .required("Please fill this box")
-    .min(6, "Enter at least 6 characters"),
+    .min(3, "Enter at least 3 characters"),
   color: Yup.string().required("Please fill this box"),
 });
 
@@ -83,11 +87,11 @@ const AddTask = () => {
                   name="color"
                   // placeholder="choice category color "
                 />
-                <button className="btn submit mt-4 col-10">Add</button>
+                <button className="btn submit mt-4 col-10 color-white">Add {loading&& <Spinner animation="border" role="status" size="sm"/>}</button>
               </Form>
            
         </Formik>
-        {err&&<span>Somthings done wrong </span>}
+        {err&&<span className="color-war">Somthings done wrong </span>}
       </ModalCenter>
     </>
   );

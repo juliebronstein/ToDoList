@@ -8,6 +8,7 @@ import { AuthContext } from "../context/UserContext";
 import { TaskContext } from "../context/TasksContext";
 import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { Spinner } from "react-bootstrap";
 
 const initialValues = {
   title: "",
@@ -43,9 +44,10 @@ const onSubmit = async (values, actions, setErr, setLoading,setShow,uid,setCater
     });
   } catch (error) {
     console.error('Error adding document: ', error);
+    setErr(true)
     throw error; 
   }
-
+actions.resetForm()
 
 
 
@@ -92,11 +94,11 @@ const AddCategory = () => {
                   type="color"
                   name="color"
                 />
-                <button type="submit" className="btn submit mt-4 col-10">Add</button>
+                <button type="submit" className="btn submit mt-4 col-10 color-white">Add {loading&& <Spinner animation="border" role="status" size="sm"/>}</button>
               </Form>
            
         </Formik>
-        {err&&<span>Somthings done wrong </span>}
+        {err&&<span className="color-war">Somthings done wrong </span>}
       </ModalCenter>
     </>
   );

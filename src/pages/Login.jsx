@@ -6,19 +6,20 @@ import backPic from "../img/back.jpg" ;
 import FormikControl from '../components/form/FormikControl';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import { Spinner } from 'react-bootstrap';
 const initialValues ={
     email: '',
     password: '',
 }
 const onSubmit = async(values, actions,setErr,setLoading,navigate)=>{
-
+setLoading(true)
   try {
     await signInWithEmailAndPassword(auth, values.email, values.password);
     navigate("/")
   } catch (err) {
     setErr(true);
   }
-   
+   setLoading(false)
 }
 
 const validationSchema = Yup.object({
@@ -64,9 +65,11 @@ const [loading,setLoading]=useState(false)
                 placeholder="insert your password"
               />
               <button className="btn submit mt-4 col-10">
-                Sign In
+                Sign In {loading&& <Spinner animation="border" role="status" size="sm"/>}
               </button>
             </Form>
+            
+            {err&& <p className="mt-4 color-war">Somthimg done wrog</p>}
             <p className="mt-4">You don't have an account? <Link to="/register">Register</Link></p>
           </div>
         </div>

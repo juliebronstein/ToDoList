@@ -94,7 +94,7 @@ const Register = () => {
               Sign Up {loading&& <Spinner animation="border" role="status" size="sm"/>}
             </button>
           </Form>
-          {err&& <p className="mt-4">Something went wrong</p>}
+          {err&& <p className="mt-4 color-war">Something went wrong</p>}
           <p className="mt-4">You have an account? <Link to="/login">Login</Link></p>
         </div>
       </div>
