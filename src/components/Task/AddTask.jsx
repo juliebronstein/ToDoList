@@ -39,23 +39,26 @@ const initialValues = {
  cateId: "",
  uId:""
 };
-const onSubmit = async (values, actions, setErr, setLoading,setShow,setTasks,uid,setForceRender) => {
+const onSubmit = async (values, actions, setErr, setLoading,setShow,setTasks,uid,categories) => {
     setLoading(true)
     console.log("values in add task:",values)
     const title=values.title
     const cateId=values.cateId
+    const cate=categories.find(c=>c.catId===values.cateId)
     try {
       const categoryRef = collection(db, 'task');
       const newDocRef = await addDoc(categoryRef, {
         title: title,
         cateId: cateId,
-        uId:uid
+        uId:uid,
+        state:"notDone"
       });
       await updateDoc(newDocRef, {
         taskId: newDocRef.id,
         title: title,
         cateId: cateId,
-        uId:uid
+        uId:uid,
+        state:"notDone"
       });
       setTasks((prevTasks) => {
         return [
@@ -64,11 +67,14 @@ const onSubmit = async (values, actions, setErr, setLoading,setShow,setTasks,uid
             taskId:newDocRef.id,
             title: title,
             cateId: cateId,
-            uId:uid
+            uId:uid,
+            state:"notDone",
+            cateTitle: cate?.title,
+            cateColor: cate?.color,
           }
         ];
       });
-      setForceRender(last=>last+1)
+     
     } catch (error) {
       console.error('Error adding document: ', error);
       setErr(true)
@@ -87,7 +93,7 @@ const validationSchema = Yup.object({
     cateId:Yup.string().required("Please fill this box")
 });
 
-const AddTask = ({setForceRender}) => {
+const AddTask = () => {
   const { currentUser } = useContext(AuthContext);
   const {categories,setTasks}=useContext(TaskContext)
   const [show, setShow] = useState(false);
@@ -120,7 +126,7 @@ const AddTask = ({setForceRender}) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(values, actions) =>
-            onSubmit(values, actions, setErr, setLoading,setShow,setTasks,currentUser.uid,setForceRender)
+            onSubmit(values, actions, setErr, setLoading,setShow,setTasks,currentUser.uid,categories)
           }
         >
              

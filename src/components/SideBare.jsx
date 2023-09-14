@@ -14,39 +14,7 @@ import { TaskContext } from "../context/TasksContext";
 import { date } from "yup";
 
 const SideBar = () => {
-  const { currentUser } = useContext(AuthContext);
-  const { setCatergories, categories } = useContext(TaskContext);
-  const getCategoris = async () => {
-    try{
-      const categoryRef = collection(db, 'category');
-    const querySnapshot = await getDocs(categoryRef);
-    const categoryData = [];
-
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      categoryData.push(data);
-    });
-    return categoryData
-  } catch (error) {
-    console.error('Error fetching category data:', error);
-    throw error; // Handle the error in your component}
-  }}
- 
-    useEffect(() => {
-    const data= getCategoris(currentUser.uid)
-    .then((categoryData) => {
-      setCatergories(()=>{return categoryData})
-      // return categoryData
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    })
-      }, []);
-
-
-
-
-
+  const { categories } = useContext(TaskContext);
   return (
     <div className="d-none d-md-flex col-2 sidebare ">
       <img className="col-6" src={pic} alt="" />

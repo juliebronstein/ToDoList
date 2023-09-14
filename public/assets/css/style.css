@@ -302,3 +302,11 @@ margin-right: 5px;
    .color-white{
     color: white !important;
    }
+   .task-deactive{
+    text-decoration: line-through;
+    color: rgb(128, 126, 126);  
+   }
+   .task-active{
+    text-decoration:none;
+    color: rgb(0, 0, 0) ;  
+   }

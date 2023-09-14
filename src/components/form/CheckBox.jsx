@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import FormikError from "./FormikError";
 
 const Checkbox = (props) => {
-  const { name, className, formik, value } = props;
+  const { name, className, formik, value,handler,task } = props;
   const [checked, setCheck] = useState(value);
   const handleOptionChange = (e) => {
     const newValue = !checked;
@@ -12,7 +12,7 @@ const Checkbox = (props) => {
       ...formik.values,
       [name]: newValue,
     });
-   
+   handler(task)
   };
   return (
 <div className="col-2 d-flex checkcontainer">
