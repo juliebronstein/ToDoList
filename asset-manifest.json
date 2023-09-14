@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/TodoList/static/js/main.bcc265f3.chunk.js",
-    "main.js.map": "/TodoList/static/js/main.bcc265f3.chunk.js.map",
+    "main.js": "/TodoList/static/js/main.157f95cd.chunk.js",
+    "main.js.map": "/TodoList/static/js/main.157f95cd.chunk.js.map",
     "runtime-main.js": "/TodoList/static/js/runtime-main.e3e42cc3.js",
     "runtime-main.js.map": "/TodoList/static/js/runtime-main.e3e42cc3.js.map",
-    "static/js/2.28113bc4.chunk.js": "/TodoList/static/js/2.28113bc4.chunk.js",
-    "static/js/2.28113bc4.chunk.js.map": "/TodoList/static/js/2.28113bc4.chunk.js.map",
+    "static/js/2.6163d85e.chunk.js": "/TodoList/static/js/2.6163d85e.chunk.js",
+    "static/js/2.6163d85e.chunk.js.map": "/TodoList/static/js/2.6163d85e.chunk.js.map",
     "index.html": "/TodoList/index.html",
-    "static/js/2.28113bc4.chunk.js.LICENSE.txt": "/TodoList/static/js/2.28113bc4.chunk.js.LICENSE.txt",
+    "static/js/2.6163d85e.chunk.js.LICENSE.txt": "/TodoList/static/js/2.6163d85e.chunk.js.LICENSE.txt",
     "static/media/back.206de6a4.jpg": "/TodoList/static/media/back.206de6a4.jpg",
     "static/media/istockphoto-1410607969-612x612.d3034005.jpg": "/TodoList/static/media/istockphoto-1410607969-612x612.d3034005.jpg",
     "static/media/logo.7e7a1791.png": "/TodoList/static/media/logo.7e7a1791.png"
   },
   "entrypoints": [
     "static/js/runtime-main.e3e42cc3.js",
-    "static/js/2.28113bc4.chunk.js",
-    "static/js/main.bcc265f3.chunk.js"
+    "static/js/2.6163d85e.chunk.js",
+    "static/js/main.157f95cd.chunk.js"
   ]
 }
