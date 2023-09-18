@@ -8,7 +8,7 @@ import FormikControl from "../form/FormikControl";
 import { TaskContext } from "../../context/TasksContext";
 import { Spinner } from "react-bootstrap";
 import AddCategory from "../AddCategory";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const initialValues = {
@@ -26,15 +26,55 @@ const onSubmit = async (
   setTasks,
   uid,
   categories,
-  editTask
+  editTask,
+  setEditTask,
+  setReinitialValues
 ) => {
   setLoading(true);
-  console.log("values in add task:", values);
   const title = values.title;
   const cateId = values.cateId;
   const cate = categories.find((c) => c.catId === values.cateId);
   try {
-    const categoryRef = collection(db, "task");
+     
+    if(editTask){
+      const taskDocRef = doc(db, "task", editTask.taskId);
+      if (editTask.taskId !== undefined) {
+        const updatedData = {
+          taskId: editTask.taskId,
+          title: title,
+          cateId: cateId,
+          uId: editTask.uId,
+          state: editTask.state
+        };        
+          await updateDoc(taskDocRef, updatedData);
+          const newTask={
+            taskId: editTask.taskId,
+          title: title,
+          cateId: cateId,
+          uId: editTask.uId,
+          state: editTask.state,
+          cateTitle:cate?.title ,
+          cateColor: cate?.color,
+          }
+  
+          setTasks((old) => {
+            const newData = [...old];
+            const index = newData.findIndex((i) => i.taskId === editTask.taskId);
+            newData[index] = newTask;
+            return newData;
+          });
+        }
+
+        setEditTask(null)
+        setReinitialValues(null)
+
+
+
+
+
+
+    }else{
+     const categoryRef = collection(db, "task")
     const newDocRef = await addDoc(categoryRef, {
       title: title,
       cateId: cateId,
@@ -62,6 +102,7 @@ const onSubmit = async (
         },
       ];
     });
+    }
   } catch (error) {
     console.error("Error adding document: ", error);
     setErr(true);
@@ -69,9 +110,8 @@ const onSubmit = async (
   }
 
   actions.resetForm();
-
   setShow(false);
-};
+}
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -80,16 +120,13 @@ const validationSchema = Yup.object({
   cateId: Yup.string().required("Please fill this box"),
 });
 
-const AddTask = ({ editTask, setEditTask,show,setShow}) => {
-  console.log("edite task in add",editTask)
-  const [reinitialValues,setReinitialValues]=useState(null)
+const AddTask = ({ editTask, setEditTask, show, setShow }) => {
+   const [reinitialValues, setReinitialValues] = useState(null);
   useEffect(() => {
     if (editTask) {
       setReinitialValues({
-        taskId: editTask.taskId,
-  title: editTask.title,
-  cateId: editTask.cateId,
-uId:editTask.uId
+        title: editTask.title,
+        cateId: editTask.cateId,
       });
     } else setReinitialValues(null);
   }, [editTask]);
@@ -113,14 +150,18 @@ uId:editTask.uId
 
   return (
     <>
-      {!show && <AddButton
-        onClick={() => setShow(true)}
-        title="Add new"
-        className="col-10 text-center mt-2 pointer add-cate add"
-      />}
-      <ModalCenter title="Add Task" show={show} setShow={setShow}>
+      
+        <AddButton
+          onClick={() => {setShow(true)
+          setReinitialValues(null)}
+          }
+          title="Add new"
+          className="col-10 text-center mt-2 pointer add-cate add"
+        />
+     
+      <ModalCenter title={reinitialValues?`Edit: ${editTask?.title}`:"Add Task"} show={show} setShow={setShow}>
         <Formik
-         initialValues={reinitialValues || initialValues}
+          initialValues={reinitialValues || initialValues}
           validationSchema={validationSchema}
           onSubmit={(values, actions) =>
             onSubmit(
@@ -131,7 +172,10 @@ uId:editTask.uId
               setShow,
               setTasks,
               currentUser.uid,
-              categories
+              categories,
+              editTask,
+              setEditTask,
+              setReinitialValues
             )
           }
           enableReinitialize

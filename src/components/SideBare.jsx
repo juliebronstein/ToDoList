@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import { MdLogout } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsClipboard2Check } from "react-icons/bs";
-import picture from "../img/istockphoto-1410607969-612x612.jpg";
 import pic from "../img/logo.png";
 import Collaps from "./form/Collaps";
 import AddCategory from "./AddCategory";
-import { AuthContext } from "../context/UserContext";
-import { collection, doc, getDoc, getDocs, onSnapshot } from "firebase/firestore";
 import { TaskContext } from "../context/TasksContext";
-import { date } from "yup";
 
 const SideBar = () => {
   const { categories } = useContext(TaskContext);

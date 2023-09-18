@@ -12,7 +12,7 @@ const onSubmit = async (values, actions) => {};
 const validationSchema = Yup.object({ });
 
 
-const Task = ({editTask,setEditTask,setShow}) => {
+const Task = ({setEditTask,setShow}) => {
 const { tasks, setTasks} = useContext(TaskContext);
 
 const setDoneTask = async (task) => {
@@ -54,6 +54,8 @@ const setDoneTask = async (task) => {
       console.error("task.taskId is undefined or does not exist.");
     }
   };
+
+  
   return (
     <div className="task col-10 ">
       <Formik

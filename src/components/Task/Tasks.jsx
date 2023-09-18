@@ -17,7 +17,7 @@ const Tasks = () => {
             <button className='chips col-3 col-md-2'><VscFilterFilled/></button>             
           </div>
         </div>
-          <Task editTask={editTask} setEditTask={setEditTask} setShow={setShow} />
+          <Task setEditTask={setEditTask} setShow={setShow} />
           <AddTask editTask={editTask} setEditTask={setEditTask} show={show} setShow={setShow} />        
       </div>
     </>
